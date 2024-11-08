@@ -11,6 +11,12 @@ typedef struct List {
     struct List* next;  
 } List;
 
+typedef struct Path {
+    int size;
+    List* nodes;
+    struct Path* next;
+} Path;
+
 
 Node* createNode(int value) {
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -166,23 +172,42 @@ void freeGraph(Node* nodes[], int numNodes) {
 }
 
 
+void addPath(Path** pathList, int* path, int pathLength, Node* nodes[]) {
+    Path* newPath = (Path*)malloc(sizeof(Path));
+    newPath->size = pathLength;
+    newPath->nodes = NULL;
+    newPath->next = NULL;
 
-void findAllPaths(Node* currentNode, Node* destination, int* path, int pathLength, int* visited) {
+    List* current = NULL;
+    for (int i = 0; i < pathLength; i++) {
+        List* newNode = (List*)malloc(sizeof(List));
+        newNode->node = nodes[path[i] - 1];
+        newNode->next = NULL;
+
+        if (newPath->nodes == NULL) {
+            newPath->nodes = newNode;
+        } else {
+            current->next = newNode;
+        }
+        current = newNode;
+    }
+
+    newPath->next = *pathList;
+    *pathList = newPath;
+}
+
+void findAllPaths(Node* currentNode, Node* destination, int* path, int pathLength, int* visited, Path** pathList, Node* nodes[]) {
     visited[currentNode->value - 1] = 1;
     path[pathLength] = currentNode->value;
     pathLength++;
 
     if (currentNode == destination) {
-        printf("Path: ");
-        for (int i = 0; i < pathLength; i++) {
-            printf("%d ", path[i]);
-        }
-        printf("\n");
+        addPath(pathList, path, pathLength, nodes);
     } else {
         List* neighbor = currentNode->neighbors;
         while (neighbor != NULL) {
             if (!visited[neighbor->node->value - 1]) {
-                findAllPaths(neighbor->node, destination, path, pathLength, visited);
+                findAllPaths(neighbor->node, destination, path, pathLength, visited, pathList, nodes);
             }
             neighbor = neighbor->next;
         }
@@ -191,41 +216,73 @@ void findAllPaths(Node* currentNode, Node* destination, int* path, int pathLengt
     visited[currentNode->value - 1] = 0;
 }
 
-void exploreAllPaths(Node* startNode, Node* endNode, int numNodes) {
-    int* path = (int*)malloc(numNodes * sizeof(int));   
-    int* visited = (int*)calloc(numNodes, sizeof(int)); 
+Path* exploreAllPaths(Node* startNode, Node* endNode, int numNodes, Node* nodes[]) {
+    Path* pathList = NULL;
 
-    findAllPaths(startNode, endNode, path, 0, visited);
+    int* path = (int*)malloc(numNodes * sizeof(int));
+    int* visited = (int*)calloc(numNodes, sizeof(int));
+
+    findAllPaths(startNode, endNode, path, 0, visited, &pathList, nodes);
 
     free(path);
     free(visited);
+
+    return pathList;
+}
+
+void printPaths(Path* pathList) {
+    Path* path = pathList;
+    while (path != NULL) {
+        printf("Path of size %d: ", path->size);
+        List* node = path->nodes;
+        while (node != NULL) {
+            printf("%d -> ", node->node->value);
+            node = node->next;
+        }
+        printf("NULL\n");
+        path = path->next;
+    }
 }
 
 
 int secondMinimum(int n, int** edges, int edgesSize, int* edgesColSize, int time, int change) {
- return 0;   
+    Node* nodes[n];
+    for (int i = 0; i < n; i++) {
+        nodes[i] = createNode(i + 1);
+    }
+
+    for (int i = 0; i < edgesSize; i++) {
+        int src = edges[i][0];
+        int dest = edges[i][1];
+        addEdge(nodes, src, dest, n);
+    }
+    printGraph(nodes,n);
+    Path *paths=exploreAllPaths(nodes[0],nodes[n-1],n,nodes);
+    printPaths(paths);
+
+    if(paths->next!=NULL){
+        return(paths->next->size);
+    }else{
+        return(paths->size+2);
+    }
 }
 
 
 int main(){
     int numNodes = 5;
-    Node* nodes[numNodes];
-
-    for (int i = 0; i < numNodes; i++) {
-        nodes[i] = createNode(i + 1);
-    }
-
-    addEdge(nodes, 1, 2, numNodes);
-    addEdge(nodes, 1, 3, numNodes);
-    addEdge(nodes, 1, 4, numNodes);
-    addEdge(nodes, 2, 1, numNodes);
-    addEdge(nodes, 3, 4, numNodes);
-    addEdge(nodes, 4, 5, numNodes);
-
-    exploreAllPaths(nodes[0], nodes[4], numNodes);
-
     
-    freeGraph(nodes, numNodes);
+    int edgesSize = 5;
+    int* edges[] = {
+        (int[]){1, 2},
+        (int[]){1, 3},
+        (int[]){1, 4},
+        (int[]){3, 4},
+        (int[]){4, 5}
+    };
+    int edgesColSize[] = {2, 2, 2, 2, 2};
+
+    int result = secondMinimum(numNodes, edges, edgesSize, edgesColSize, 0, 0);
+    printf("Second minimum path length: %d\n", result);
 
     return 0;
 }
