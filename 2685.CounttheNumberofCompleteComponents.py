@@ -1,52 +1,63 @@
-queue = []
-explored = []
-visited = []
-count_components = 0
-graph = {}
+class Solution(object):
+    queue = []
+    explored = []
+    visited = []
+    count_components = 0
+    graph = {}
 
+    def bfs_all_components(self, adj):
+        for node in adj:
+            if node in self.explored:
+                # print(f"Nó: {node} já foi explorado")
+                continue
+            self.count_components += 1
+            self.bfs(adj, node)
+        return self.explored
 
-def bfs_all_components(adj):
-    global count_components
-    for node in adj:
-        if node in explored:
-            print(f"Nó: {node} já foi explorado")
-            continue
-        count_components += 1
-        bfs(adj, node)
-    return explored
+    def bfs(self, adj, start=None, end=None):
 
+        self.queue.append(start)
+        self.visited.append(start)
+        while self.queue:
+            node = self.queue.pop(0)
+            for neighbor in adj[node]:
+                if neighbor == end:
+                    return self.explored
+                if neighbor not in self.explored:
+                    self.explored.append(neighbor)
+                    self.visited.append(neighbor)
+                    self.queue.append(neighbor)
 
-def bfs(adj, start=None, end=None):
-    global queue
-    global explored
-    global visited
+        return self.explored
 
-    queue.append(start)
-    visited.append(start)
-    while queue:
-        node = queue.pop(0)
-        for neighbor in adj[node]:
-            if neighbor == end:
-                return explored
-            if neighbor not in explored:
-                explored.append(neighbor)
-                visited.append(neighbor)
-                queue.append(neighbor)
+    def countCompleteComponents(self, n, edges):
+        if len(edges) == 0:
+            return n
 
-    return explored
+        graph = {i: [] for i in range(n)}
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        self.bfs_all_components(graph)
+        return self.count_components
 
 
 def main():
-    graph[0] = [1, 2]
-    graph[1] = [0, 2]
-    graph[2] = [0, 1]
-    #
-    graph[3] = [4]
-    graph[4] = [3]
-    #
-    graph[5] = []
-    bfs_all_components(graph)
-    print(count_components)
+    solution = Solution()
+    result = solution.countCompleteComponents(6, [[0, 1], [0, 2], [1, 2], [3, 4]])
+    # result == 3
+    # [[0, 1],[0, 2],[1, 2],[3, 4]]
+    # graph[0] = [1, 2]
+    # graph[1] = [0, 2]
+    # graph[2] = [0, 1]
+    # #
+    # graph[3] = [4]
+    # graph[4] = [3]
+    # #
+    # graph[5] = []
+    # bfs_all_components(graph)
+    print(result)
     pass
 
 
