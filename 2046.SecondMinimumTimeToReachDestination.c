@@ -91,6 +91,67 @@ void printGraph(Node* nodes[], int numNodes) {
     }
 }
 
+void enqueue(List** head, Node* node) {
+    List* newElement = (List*)malloc(sizeof(List));
+    newElement->node = node;
+    newElement->next = NULL;
+
+    if (*head == NULL) {
+        *head = newElement;
+    } else {
+        List* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newElement;
+    }
+}
+
+Node* dequeue(List** head) {
+    if (*head == NULL) {
+        return NULL;
+    }
+    List* temp = *head;
+    Node* node = temp->node;
+    *head = (*head)->next;
+    free(temp);
+    return node;
+}
+
+int isVisited(int* visited, int value, int numNodes) {
+    return visited[value - 1];
+}
+
+void markVisited(int* visited, int value, int numNodes) {
+    visited[value - 1] = 1;
+}
+
+void breadthFirstSearch(Node* startNode, int numNodes) {
+    int* visited = (int*)calloc(numNodes, sizeof(int));  
+    List* queue = NULL;
+
+    enqueue(&queue, startNode);   
+    markVisited(visited, startNode->value, numNodes); 
+
+    while (queue != NULL) {
+        Node* currentNode = dequeue(&queue);
+        printf("%d ", currentNode->value);
+
+        List* neighbor = currentNode->neighbors;
+        while (neighbor != NULL) {
+            if (!isVisited(visited, neighbor->node->value, numNodes)) {
+                enqueue(&queue, neighbor->node);
+                markVisited(visited, neighbor->node->value, numNodes);
+            }
+            neighbor = neighbor->next;
+        }
+    }
+    printf("\n");
+
+    free(visited);
+}
+
+
 
 void freeGraph(Node* nodes[], int numNodes) {
     for (int i = 0; i < numNodes; i++) {
@@ -104,6 +165,41 @@ void freeGraph(Node* nodes[], int numNodes) {
     }
 }
 
+
+
+void findAllPaths(Node* currentNode, Node* destination, int* path, int pathLength, int* visited) {
+    visited[currentNode->value - 1] = 1;
+    path[pathLength] = currentNode->value;
+    pathLength++;
+
+    if (currentNode == destination) {
+        printf("Path: ");
+        for (int i = 0; i < pathLength; i++) {
+            printf("%d ", path[i]);
+        }
+        printf("\n");
+    } else {
+        List* neighbor = currentNode->neighbors;
+        while (neighbor != NULL) {
+            if (!visited[neighbor->node->value - 1]) {
+                findAllPaths(neighbor->node, destination, path, pathLength, visited);
+            }
+            neighbor = neighbor->next;
+        }
+    }
+
+    visited[currentNode->value - 1] = 0;
+}
+
+void exploreAllPaths(Node* startNode, Node* endNode, int numNodes) {
+    int* path = (int*)malloc(numNodes * sizeof(int));   
+    int* visited = (int*)calloc(numNodes, sizeof(int)); 
+
+    findAllPaths(startNode, endNode, path, 0, visited);
+
+    free(path);
+    free(visited);
+}
 
 
 int secondMinimum(int n, int** edges, int edgesSize, int* edgesColSize, int time, int change) {
@@ -126,8 +222,9 @@ int main(){
     addEdge(nodes, 3, 4, numNodes);
     addEdge(nodes, 4, 5, numNodes);
 
-    printGraph(nodes, numNodes);
+    exploreAllPaths(nodes[0], nodes[4], numNodes);
 
+    
     freeGraph(nodes, numNodes);
 
     return 0;
