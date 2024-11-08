@@ -15,7 +15,6 @@ class Solution(object):
         return self.explored
 
     def bfs(self, adj, start=None, end=None):
-
         self.queue.append(start)
         self.visited.append(start)
         while self.queue:
@@ -29,6 +28,12 @@ class Solution(object):
                     self.queue.append(neighbor)
 
         return self.explored
+
+    def is_complete(self, component, adj):
+        for node in component:
+            if len(adj[node]) != len(component) - 1:
+                return False
+        return True
 
     def countCompleteComponents(self, n, edges):
         if len(edges) == 0:
@@ -45,7 +50,7 @@ class Solution(object):
 
 def main():
     solution = Solution()
-    result = solution.countCompleteComponents(6, [[0, 1], [0, 2], [1, 2], [3, 4]])
+    result = solution.countCompleteComponents(2, [[1, 0]])
     # result == 3
     # [[0, 1],[0, 2],[1, 2],[3, 4]]
     # graph[0] = [1, 2]
