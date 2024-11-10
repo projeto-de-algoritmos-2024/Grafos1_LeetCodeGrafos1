@@ -25,6 +25,8 @@ Temas:
 
 ## Sobre 
 Descreva os objetivos do seu projeto e como ele funciona. 
+Questão feita nível Médio:
+https://leetcode.com/problems/count-the-number-of-complete-components/submissions/1447307977/?envType=problem-list-v2&envId=graph
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
