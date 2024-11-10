@@ -7,52 +7,31 @@ class Solution(object):
 
     def sumOfDistancesInTree(self, n, edges):
         graph = {node: [] for node in range(n)}
-        ends = set([])
-        distances = []
+        result = [0] * n
+        count = [1] * n
 
         for u, v in edges:
-            ends.add(u)
-            ends.add(v)
             graph[u].append(v)
             graph[v].append(u)
 
-        for end in ends:
-            distances.append(self.dfs_all_components(graph, end))
+        def dfs(node, parent):
+            for neighbor in graph[node]:
+                if neighbor != parent:
+                    dfs(neighbor, node)
+                    count[node] += count[neighbor]
+                    result[node] += result[neighbor] + count[neighbor]
 
-        result = []
+        def dfs2(node, parent):
+            for neighbor in graph[node]:
+                if neighbor != parent:
+                    result[neighbor] = (
+                        result[node] - count[neighbor] + (n - count[neighbor])
+                    )
+                    dfs2(neighbor, node)
 
-        for distance in distances:
-            count = 0
-            for d in distance:
-                count += d
-            result.append(count)
-        if len(result) == 0:
-            result = [0]
+        dfs(0, -1)
+        dfs2(0, -1)
         return result
-
-    def dfs_all_components(self, adj, end):
-        distances = []
-
-        for node in adj:
-            self.visited = set([])
-            if node != end:
-                distances.append(self.dfs_visit(adj, node, end))
-
-        return distances
-
-    def dfs_visit(self, adj, start=None, end=None, count=0):
-        if start == end:
-            return count
-
-        self.visited.add(start)
-
-        for neighbor in adj[start]:
-            if neighbor not in self.visited:
-                distance = self.dfs_visit(adj, neighbor, end, count + 1)
-                if distance is not None:
-                    return distance
-
-        return None
 
 
 def main():
