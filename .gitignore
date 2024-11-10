@@ -1,0 +1,38 @@
+# Arquivos de objetos compilados
+*.o
+*.out
+*.a
+*.so
+*.exe
+
+# Pastas e arquivos temporários
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Ambientes virtuais e pacotes Python
+env/
+venv/
+*.egg-info/
+.eggs/
+
+# Configurações e caches de IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Arquivos de build (para CMake, Makefile e etc)
+build/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+
+# Arquivos para o sistema operacional
+.DS_Store
+Thumbs.db
