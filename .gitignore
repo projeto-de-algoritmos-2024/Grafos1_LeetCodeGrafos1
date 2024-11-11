@@ -4,6 +4,7 @@
 *.a
 *.so
 *.exe
+teste.txt
 
 # Pastas e arquivos temporários
 __pycache__/
