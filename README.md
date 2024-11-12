@@ -44,3 +44,5 @@ Para rodar este projeto, basta entrar na raiz do projeto e executar o arquivo re
 python3 834.SumofDistancesinTree.py
 ```
 
+## Outros
+Desconsiderar a função </br>main()<br> dos arquivos .py ao tentar submeter ao leetcode. Esta função foi implementada apenas com o intuito de testar casos base.
