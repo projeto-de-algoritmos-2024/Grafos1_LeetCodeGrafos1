@@ -27,10 +27,10 @@ Questão: [Médio - 2685. Count the Number of Complete Components](https://leetc
 ![alt text](2685.png)
 
 Questão: [Difícil - 2045. Second Minimum Time to Reach Destination](https://leetcode.com/problems/second-minimum-time-to-reach-destination/description/?envType=problem-list-v2&envId=graph)
-![alt text](2045.png)
+![alt text](2045.jpg)
 
 Questão: [Médio - 210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/description/?envType=problem-list-v2&envId=topological-sort)
-![alt text](210.png)
+![alt text](210.jpg)
 
 
 ## Instalação 
