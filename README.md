@@ -13,11 +13,11 @@ Temas:
 | 23/2022952  |  Leonardo de Souza Takehana |
 
 ## Sobre 
-O projeto é contemplado por resolver 3 questões da plataforma LeetCode, sendo 2 dífíceis e 1 médio. A definição de médio, fácil e difícil é definido pela própria plataforma.
+O projeto é contemplado por resolver 4 questões da plataforma LeetCode, sendo 2 dífíceis e 2 médio. A definição de médio, fácil e difícil é concebida pela própria plataforma.
 
-Para os exercícios serem realizados, usamos o algorito de busca em profundidade e busca em largura com pequenas modificações, para que pudessem receber o Accept como solução para o desafio.
+Para os exercícios serem realizados, usamos o algorito de busca em profundidade, busca em largura e Ordem Topológica com pequenas modificações, para que pudessem receber o Accept como solução para o desafio.
 
-As questões foram escolhidas com base nos algoritmos DFS e BFS, permitindo o grupo focar apenas nos algoritmos analisados em aula com mínimas adaptações.
+As questões foram escolhidas com base nos algoritmos DFS, BFS e Ordenação Topológica, permitindo o grupo focar apenas nos algoritmos analisados em aula com mínimas adaptações.
 
 ## Screenshots
 Questão: [Difícil - 834. Sum of Distances in Tree](https://leetcode.com/problems/sum-of-distances-in-tree/?envType=problem-list-v2&envId=graph)
