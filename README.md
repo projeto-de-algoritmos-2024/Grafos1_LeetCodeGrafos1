@@ -41,11 +41,11 @@ Instalar uma versão lastest stable do python desde de que seja > 3.11.
 ## Uso 
 Para rodar este projeto, basta entrar na raiz do projeto e executar o arquivo referente a questão que se deseja avaliar, por exemplo:
 ```
-
-## Vídeo
-https://youtu.be/F1k6yxgnLog?si=Y2q7JckXNF5f5zTU
 python3 834.SumofDistancesinTree.py
 ```
 
 ## Outros
 Desconsiderar a função </br>main()<br> dos arquivos .py ao tentar submeter ao leetcode. Esta função foi implementada apenas com o intuito de testar casos base.
+
+## Vídeo
+https://youtu.be/F1k6yxgnLog?si=Y2q7JckXNF5f5zTU
