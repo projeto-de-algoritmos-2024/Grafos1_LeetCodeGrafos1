@@ -41,6 +41,9 @@ Instalar uma versão lastest stable do python desde de que seja > 3.11.
 ## Uso 
 Para rodar este projeto, basta entrar na raiz do projeto e executar o arquivo referente a questão que se deseja avaliar, por exemplo:
 ```
+
+## Vídeo
+https://youtu.be/F1k6yxgnLog?si=Y2q7JckXNF5f5zTU
 python3 834.SumofDistancesinTree.py
 ```
 
